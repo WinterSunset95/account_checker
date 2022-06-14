@@ -1,0 +1,71 @@
+
+open_chrome() code
+- it should check with handle..
+- if Chrome is already open then do not reopen it
+- else re-open with same handle / pointer
+
+set_proxy()
+- will take a new proxy from proxy.txt and set it up
+- it will basically rotate proxies
+
+check_captcha()
+- will check if cloudflare or google recaptcha is there
+- will return true if it is there else false
+
+clean_browser()
+- check how many tabs are open.
+- and close all tjhe tabs other then first one
+- now in first one open settings
+- it will delete everything in this browser 
+ad reset it .
+
+debug_log()
+- parameters - type, portal name, text with details
+- like Error, flipkart, "error messages have changed, pls revisit"
+
+add_portal_to_IgnoreList()
+- paramter - portal name like flipkart
+- whatever portal is passed that gets stored in portalignorelist.txt
+
+check_portal_in_IgnoreList()
+- paramter - portal name like flipkart
+- it will read portalignorelist.txt and check
+- if portal name is there or not. 
+- if ther return true else false
+
+
+open_website()
+- parameter - url like www.flipkart.com
+- logic
+- open the url in the browser through handle/pointer
+- once opened check for captcha check_captcha()
+- if check_captcha() then
+	clean_browser()
+	set_proxy()
+	now reopen that website and check for captcha
+
+	if check_captcha() = true then // captcha found
+		return false for fail case
+	else //captcha not found
+		check if website is open.. or web page is there... // website actually opened 
+		if website opened... 
+			return true for success
+		else 
+		 website could not be opened... 
+ 		return  error with details it is a proxy issue
+		
+  else
+	if check_websie_opened then
+		return true for success
+	else
+		return proxy error.. website not opened
+
+
+check_website_opened()
+- will do basic check to see if html is there 
+- or error is there - 404 etc...
+- return true if website is open
+- returnt false if not
+
+
+

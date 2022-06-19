@@ -9,39 +9,45 @@ from selenium.webdriver.common.keys import Keys
 import requests
 
 # captcha bypass trial
-import pytesseract
-import sys
-import argparse
-import cv2
-try:
-    import Image
-except ImportError:
-    from PIL import Image, ImageEnhance
-from subprocess import check_output
-def text_in_image_captcha(path):
-    image = requests.get('https://secure.thefreedictionary.com/access/image-rnd.ashx?0.0812071932902052')
-    file = open("captca_image.png", "wb")
-    file.write(image.content)
-    file.close()
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", required=True, help='Captcha file path')
-    ap.add_argument("-p", "--pre_processor", default="tresh", help="pre processor usage")
-    args = vars(ap.parse_args())
-    pth = 'captcha_image.png'
-    print('Resolving Captcha')
-    check_output(['convert', pth, '-resample', '600', pth])
-    text = pytesseract.image_to_string(Image.open(pth))
-    print(text)
-    
-text_in_image_captcha('https://secure.thefreedictionary.com/access/image-rnd.ashx?0.0812071932902052')    
-
-img = Image.open('captcha_image.png')
-filter = ImageEnhance.Contrast(img)
-new_image = filter.enhance(3)
-text = pytesseract.image_to_string(new_image)
-
+# =============================================================================
+# 
+# import pytesseract
+# import sys
+# import argparse
+# import cv2
+# try:
+#     import Image
+# except ImportError:
+#     from PIL import Image, ImageEnhance
+# from subprocess import check_output
+# def text_in_image_captcha(path):
+#     image = requests.get('https://secure.thefreedictionary.com/access/image-rnd.ashx?0.0812071932902052')
+#     file = open("captca_image.png", "wb")
+#     file.write(image.content)
+#     file.close()
+#     ap = argparse.ArgumentParser()
+#     ap.add_argument("-i", "--image", required=True, help='Captcha file path')
+#     ap.add_argument("-p", "--pre_processor", default="tresh", help="pre processor usage")
+#     args = vars(ap.parse_args())
+#     pth = 'captcha_image.png'
+#     print('Resolving Captcha')
+#     check_output(['convert', pth, '-resample', '600', pth])
+#     text = pytesseract.image_to_string(Image.open(pth))
+#     print(text)
+#     
+# text_in_image_captcha('https://secure.thefreedictionary.com/access/image-rnd.ashx?0.0812071932902052')    
+# 
+# img = Image.open('captcha_image.png')
+# filter = ImageEnhance.Contrast(img)
+# new_image = filter.enhance(3)
+# text = pytesseract.image_to_string(new_image)
+# 
+# =============================================================================
 global driver
-driver = webdriver.Chrome('/home/winter/account_checker/chromedriver')
+try:
+    driver = webdriver.Firefox('/home/winter/account_checker/geckodriver')
+except:
+    driver = webdriver.Chrome('/home/winter/account_checker/chromedriver')
 flag_account_found = False
 flag_account_source = ""
 flag_account_type = ""
